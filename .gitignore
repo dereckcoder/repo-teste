@@ -1,0 +1,5 @@
+ambiente_venv
+.env
+readmecss.md
+config_tokens.py
+__pycache__

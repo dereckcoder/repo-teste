@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - CRM</title>
+    
+    <!-- Importação correta do CSS no Flask -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+    <!-- 1. Sidebar -->
+    {% include 'components/sidebar.html' %}
+
+    <!-- Início do Container Principal que faltava -->
+    <div class="main-content">
+        
+        <!-- Topbar dentro do main-content -->
+        {% include 'components/topbar.html' %}
+
+    <!-- Importação do JS via Flask se necessário, ou caminho padrão -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

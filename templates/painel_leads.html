@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - CRM</title>
+    
+    <!-- Importação do CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+    <!-- 1. Sidebar -->
+    {% include 'components/sidebar.html' %}
+
+    <div class="main-content">
+        <!-- Topbar -->
+        {% include 'components/topbar.html' %}
+        
+        <!-- Kanban -->
+        <div class="kanban-container">
+            
+            <!-- Coluna 1: Oportunidade (NOVO) -->
+            <div class="kanban-col">
+                <div class="kanban-col-header">
+                    <span>Oportunidade ({{ lista_leads | selectattr('status', 'equalto', 'NOVO') | list | length }})</span>
+                </div>
+
+                    <div class="kanban-cards" data-status="NOVO">
+                        {% for lead in lista_leads %}
+                            {% if lead.status == 'NOVO' %}
+                        <div class="lead-card" draggable="true" data-id="{{ lead._id|string }}">
+                            <div class="card-header-info">
+                                <span>Criado em {{ lead.data_criacao if lead.data_criacao else 'N/A' }}</span>
+                                <span class="valor-lead">R$ {{ lead.valor if lead.valor else '0,00' }}</span>
+                            </div>
+                            <div class="card-title">{{ lead.nome }}</div>
+                            <div class="card-details">
+                                Telefone: {{ lead.telefone }}
+                            </div>
+                            <span class="tag-atividade">SEM ATIVIDADE</span>
+                            <div class="card-footer-info">
+                                <span>👤 {{ lead.vendedor if lead.vendedor else 'Não atribuído' }}</span>
+                                <button class="btn-detalhes" type="button">Ver Detalhes</button>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Coluna 2: Em Negociação (pendente) -->
+            <div class="kanban-col">
+                <div class="kanban-col-header">
+                    <span>Em Negociação ({{ lista_leads | selectattr('status', 'equalto', 'pendente') | list | length }})</span>
+                </div>
+
+                <div class="kanban-cards" data-status="pendente">
+                    {% for lead in lista_leads %}
+                        {% if lead.status == 'pendente' %}
+                        <div class="lead-card" draggable="true" data-id="{{ lead._id|string }}">
+                            <div class="card-header-info">
+                                <span>Criado em {{ lead.data_criacao if lead.data_criacao else 'N/A' }}</span>
+                                <span class="valor-lead">R$ {{ lead.valor if lead.valor else '0,00' }}</span>
+                            </div>
+                            <div class="card-title">{{ lead.nome }}</div>
+                            <div class="card-details">
+                                Telefone: {{ lead.telefone }}
+                            </div>
+                            <div class="card-footer-info">
+                                <span>👤 {{ lead.vendedor if lead.vendedor else 'Não atribuído' }}</span>
+                                <button class="btn-detalhes" type="button">Ver Detalhes</button>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Coluna 3: Vendido (vendido) -->
+            <div class="kanban-col">
+                <div class="kanban-col-header">
+                    <span>Vendido ({{ lista_leads | selectattr('status', 'equalto', 'vendido') | list | length }})</span>
+                </div>
+
+                <div class="kanban-cards" data-status="vendido">
+                    {% for lead in lista_leads %}
+                        {% if lead.status == 'vendido' %}
+                        <div class="lead-card" draggable="true" data-id="{{ lead._id|string }}">
+                            <div class="card-header-info">
+                                <span>Criado em {{ lead.data_criacao if lead.data_criacao else 'N/A' }}</span>
+                                <span class="valor-lead">R$ {{ lead.valor if lead.valor else '0,00' }}</span>
+                            </div>
+                            <div class="card-title">{{ lead.nome }}</div>
+                            <div class="card-details">
+                                Telefone: {{ lead.telefone }}
+                            </div>
+                            <div class="card-footer-info">
+                                <span>👤 {{ lead.vendedor if lead.vendedor else 'Não atribuído' }}</span>
+                                <button class="btn-detalhes" type="button">Ver Detalhes</button>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Coluna 4: Perdidos (perdido) -->
+            <div class="kanban-col">
+                <div class="kanban-col-header">
+                    <span>Perdidos ({{ lista_leads | selectattr('status', 'equalto', 'perdido') | list | length }})</span>
+                </div>
+
+                <div class="kanban-cards" data-status="perdido">
+                    {% for lead in lista_leads %}
+                        {% if lead.status == 'perdido' %}
+                        <div class="lead-card" draggable="true" data-id="{{ lead._id|string }}">
+                            <div class="card-header-info">
+                                <span>Criado em {{ lead.data_criacao if lead.data_criacao else 'N/A' }}</span>
+                                <span class="valor-lead">R$ {{ lead.valor if lead.valor else '0,00' }}</span>
+                            </div>
+                            <div class="card-title">{{ lead.nome }}</div>
+                            <div class="card-details">
+                                Telefone: {{ lead.telefone }}
+                            </div>
+                            <div class="card-footer-info">
+                                <span>👤 {{ lead.vendedor if lead.vendedor else 'Não atribuído' }}</span>
+                                <button class="btn-detalhes" type="button">Ver Detalhes</button>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div><!-- fim .kanban-container -->
+    </div><!-- fim .main-content -->
+    <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

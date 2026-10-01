@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Lead - CRM</title>
+    
+    <!-- Importação do CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+    
+<body>
+    <!-- 1. Sidebar -->
+    {% include 'components/sidebar.html' %}
+
+    <div class="main-content">
+        <!-- Topbar -->
+        {% include 'components/topbar.html' %}
+        
+        <div class="page-wrapper">
+            <!-- Área de Cadastro -->
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <line x1="19" y1="8" x2="19" y2="14"></line>
+                            <line x1="22" y1="11" x2="16" y2="11"></line>
+                        </svg>
+                        Novo Lead
+                    </h2>
+                    <p>Preencha as informações do novo contato para dar início ao processo de vendas.</p>
+                </div>
+
+                <form id="leadForm" action="/cadastrar-lead" method="POST" class="form-grid">
+                    
+                    <!-- NOME (Ocupa linha inteira) -->
+                    <div class="form-group full-width">
+                        <label for="empresa">Empresa *</label>
+                        <div class="input-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                            <input type="text" id="empresa" name="empresa" required placeholder="Ex: Transporte">
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="nome">Nome Completo Socíos*</label>
+                        <div class="input-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <input type="text" id="nome" name="nome" required placeholder="Ex: Maria Joaquina">
+                        </div>
+                    </div>
+
+                    <!-- TELEFONE -->
+                    <div class="form-group">
+                        <label for="telefone">Telefone / WhatsApp *</label>
+                        <div class="input-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <input type="tel" id="telefone" name="telefone" required placeholder="(00) 00000-0000">
+                        </div>
+                    </div>
+
+                    <!-- E-MAIL -->
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <div class="input-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <input type="email" id="email" name="email" placeholder="contato@empresa.com">
+                        </div>
+                    </div>
+
+                    <!-- VALOR -->
+                    <div class="form-group">
+                        <label for="valor">Valor Estimado (R$)</label>
+                        <div class="input-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="1" x2="12" y2="23"></line>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg>
+                            <input type="number" id="valor" name="valor" step="0.01" min="0" placeholder="0,00">
+                        </div>
+                    </div>
+
+                    <!-- VENDEDOR -->
+                    <div class="form-group">
+                        <label for="vendedor">Atribuir Vendedor</label>
+                        <select id="vendedor" name="vendedor">
+                            <option value="">Selecione um vendedor (Opcional)</option>
+                            <option value="Vendedor 1">João Silva</option>
+                            <option value="Vendedor 2">Maria Souza</option>
+                        </select>
+                    </div>
+
+                    <!-- STATUS -->
+                    <div class="form-group full-width">
+                        <label for="status">Etapa no Funil</label>
+                        <select id="status" name="status">
+                            <option value="NOVO" selected>Oportunidade (NOVO)</option>
+                            <option value="pendente">Em Negociação (Pendente)</option>
+                            <option value="vendido">Vendido (Ganha)</option>
+                            <option value="perdido">Perdido (Perdida)</option>
+                        </select>
+                    </div>
+
+                    <!-- BOTÕES -->
+                    <div class="form-actions">
+                        <a href="/" class="btn btn-cancelar">Cancelar</a>
+                        <button type="submit" class="btn btn-salvar">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                <polyline points="7 3 7 8 15 8"></polyline>
+                            </svg>
+                            Salvar Lead
+                        </button>
+                        <div id="mensagem" style="margin-top: 10px; font-weight: 600; font-size: 14px;"></div>
+                    </div>
+
+                </form>
+            </div><!-- fim .form-container -->
+        </div><!-- fim .page-wrapper -->
+    </div><!-- fim .main-content -->
+    
+    <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
